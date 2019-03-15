@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences preferences = getSharedPreferences("app",MODE_PRIVATE);
+        final SharedPreferences preferences = getSharedPreferences("app",MODE_PRIVATE);
         if (preferences.getBoolean("slides",true)) {
             Intent intent = new Intent(this,LoginActivity.class);
             startActivity(intent);
@@ -45,6 +45,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent launchIntent = BarcodeReaderActivity.getLaunchIntent(MainActivity.this, true, false);
                 startActivityForResult(launchIntent, 1208);
+            }
+        });
+
+        findViewById(R.id.button7).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                preferences.edit().putBoolean("slides",true).apply();
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                MainActivity.this.finish();
             }
         });
 
@@ -62,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             if (bundle != null) {
                 Barcode barcode = (Barcode) bundle.get(KEY_CAPTURED_BARCODE);
                 if ((barcode != null ? barcode.format : 0) != QR_CODE) {
-                    StyleableToast.makeText(MainActivity.this, "Invalid barcode. Please scan your ID card", Toast.LENGTH_LONG, R.style.red_toast).show();
+                    StyleableToast.makeText(MainActivity.this, "Invalid barcode. Please scan the QR code", Toast.LENGTH_LONG, R.style.red_toast).show();
                     return;
                 }
                 String rawData = (String) bundle.get(KEY_CAPTURED_RAW_BARCODE);

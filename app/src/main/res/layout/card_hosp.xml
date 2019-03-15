@@ -36,8 +36,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_today"
+                android:maxLines="1"
                 android:drawablePadding="4dp"
-                android:fontFamily="@font/sniglet" />
+                android:fontFamily="@font/sniglet"
+                android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -57,8 +59,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_home_black_24dp"
+                android:maxLines="1"
                 android:drawablePadding="4dp"
-                android:fontFamily="@font/sniglet" />
+                android:fontFamily="@font/sniglet"
+                android:inputType="textShortMessage|textCapCharacters" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -123,7 +127,6 @@
 
             <RadioButton
                 android:text="No fee due"
-                android:checked="true"
                 android:fontFamily="@font/sniglet"
                 android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
