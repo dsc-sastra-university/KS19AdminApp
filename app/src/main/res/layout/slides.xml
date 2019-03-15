@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/linearLayout_slide"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/imageView_slide"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:maxWidth="400dp"
+        android:maxHeight="400dp"
+        android:minWidth="150dp"/>
+
+    <TextView
+        android:id="@+id/titleText_slide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:text="Title"
+        android:textColor="@android:color/black"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/descriptionText_slide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Description"
+        android:textAlignment="center"
+        android:textSize="17sp" />
+
+    <Button
+        android:id="@+id/start_login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="@android:color/white"
+        android:elevation="0dp"
+        android:onClick="firstTimeLogin"
+        android:text="Start" />
+
+</LinearLayout>
