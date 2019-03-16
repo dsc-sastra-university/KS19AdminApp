@@ -4,6 +4,7 @@
     package="dpi.ks19.admin.app">
 
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -13,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="dpi.ks19.admin.EditActivity"></activity>
+        <activity android:name="dpi.ks19.admin.EditActivity"/>
         <activity
             android:name="dpi.ks19.admin.LoginActivity"
             android:configChanges="orientation|keyboardHidden"
