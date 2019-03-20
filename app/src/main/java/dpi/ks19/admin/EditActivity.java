@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.muddzdev.styleabletoast.StyleableToast;
 
 import org.json.JSONException;
@@ -32,14 +33,20 @@ import java.util.Locale;
 public class EditActivity extends AppCompatActivity {
     boolean pr = false;
 
-    private void setupUserDetails(@NonNull String rawData) throws JSONException {
-        String[] separated = rawData.split("\\$%");
+    private void setupUserDetails(@NonNull JSONObject jsonObject) throws JSONException {
+        String rawDecrypted = jsonObject.getString("decrypted");
+        if (rawDecrypted == null)
+            throw new JSONException("Data was null");
+        String[] separated = rawDecrypted.split("\\$%");
         if (separated.length < 6)
             throw new JSONException("Low params count");
 
         ((TextView)findViewById(R.id.name)).setText(separated[0]);
         ((TextView)findViewById(R.id.email)).setText(separated[1]);
         ((TextView)findViewById(R.id.mobile)).setText(separated[4]);
+
+        ((TextView)findViewById(R.id.ksid)).setText(jsonObject.optString("ksid"));
+        ((TextView)findViewById(R.id.college)).setText(jsonObject.optString("college"));
     }
 
     @Override
@@ -55,14 +62,14 @@ public class EditActivity extends AppCompatActivity {
 
         try {
             JSONObject jsonObject = new JSONObject(data);
-            String rawData = jsonObject.getString("decrypted");
-            if (rawData == null)
-                throw new JSONException("Data was null");
-            setupUserDetails(rawData);
+            setupUserDetails(jsonObject);
         } catch (JSONException e) {
             StyleableToast.makeText(EditActivity.this,"Invalid data",R.style.red_toast).show();
             return;
         }
+
+        // Access a Cloud Firestore instance from your Activity
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         SharedPreferences preferences = getSharedPreferences("app",MODE_PRIVATE);
         ViewStub stub = findViewById(R.id.layout_stub);
@@ -80,6 +87,10 @@ public class EditActivity extends AppCompatActivity {
             findViewById(R.id.button6).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (Utils.isNotNetworkConnected(EditActivity.this)) {
+                        StyleableToast.makeText(EditActivity.this,"No internet",R.style.red_toast).show();
+                        return;
+                    }
                     AlertDialog.Builder builder = new AlertDialog.Builder(EditActivity.this);
                     builder.setTitle("Are you sure?");
                     builder.setMessage("You can not undo this action. Proceed with caution");
@@ -109,6 +120,10 @@ public class EditActivity extends AppCompatActivity {
             });
         } else {
             findViewById(R.id.change_btn).setOnClickListener(v -> {
+                if (Utils.isNotNetworkConnected(EditActivity.this)) {
+                    StyleableToast.makeText(EditActivity.this,"No internet",R.style.red_toast).show();
+                    return;
+                }
                 Calendar calendar = Calendar.getInstance();
                 DatePickerDialog dialog = new DatePickerDialog(EditActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
@@ -138,6 +153,10 @@ public class EditActivity extends AppCompatActivity {
         }
 
         findViewById(R.id.button5).setOnClickListener(v -> {
+            if (Utils.isNotNetworkConnected(EditActivity.this)) {
+                StyleableToast.makeText(EditActivity.this,"No internet",R.style.red_toast).show();
+                return;
+            }
             StyleableToast.makeText(EditActivity.this,"Saved successfully", Toast.LENGTH_LONG,R.style.success_toast).show();
             EditActivity.this.finish();
         });

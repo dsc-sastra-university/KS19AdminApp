@@ -4,11 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import dpi.ks19.admin.app.R;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+
+import com.muddzdev.styleabletoast.StyleableToast;
 
 public class LoginActivity extends AppCompatActivity {
     EditText accessCodeEditText;
@@ -31,6 +32,10 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (Utils.isNotNetworkConnected(LoginActivity.this)) {
+                    StyleableToast.makeText(LoginActivity.this,"No internet",R.style.red_toast).show();
+                    return;
+                }
                 String accessKey = accessCodeEditText.getText().toString();
                 String name = nameEditText.getText().toString();
                 if (name.length() < 3) {
