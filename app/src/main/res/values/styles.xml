@@ -15,6 +15,10 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
+    <style name="CustomProgress" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:fontFamily">@font/sniglet</item>
+    </style>
+
     <style name="success_toast">
         <item name="stTextColor">#fff</item>
         <item name="stTextSize">14sp</item>

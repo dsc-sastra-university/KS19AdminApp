@@ -4,17 +4,17 @@ public class FirestoreData {
     private String feePaid;
     private String id_proof;
     private String remarks;
-    private Long checkinTime;
+    private String checkinTime;
 
-    private int numOfDays;
+    private Integer numOfDays;
     private String room;
-    private boolean isFeeDue;
-    private Long checkoutTime;
+    private Boolean isFeeDue;
+    private String checkoutTime;
 
     public FirestoreData() {
     }
 
-    public FirestoreData(String feePaid, String id_proof, String remarks, Long checkinTime, int numOfDays, String room, boolean isFeeDue, Long checkoutTime) {
+    public FirestoreData(String feePaid, String id_proof, String remarks, String checkinTime, Integer numOfDays, String room, Boolean isFeeDue, String checkoutTime) {
         this.feePaid = feePaid;
         this.id_proof = id_proof;
         this.remarks = remarks;
@@ -49,19 +49,19 @@ public class FirestoreData {
         this.remarks = remarks;
     }
 
-    public Long getCheckinTime() {
+    public String getCheckinTime() {
         return checkinTime;
     }
 
-    public void setCheckinTime(Long checkinTime) {
+    public void setCheckinTime(String checkinTime) {
         this.checkinTime = checkinTime;
     }
 
-    public int getNumOfDays() {
+    public Integer getNumOfDays() {
         return numOfDays;
     }
 
-    public void setNumOfDays(int numOfDays) {
+    public void setNumOfDays(Integer numOfDays) {
         this.numOfDays = numOfDays;
     }
 
@@ -73,19 +73,19 @@ public class FirestoreData {
         this.room = room;
     }
 
-    public boolean isFeeDue() {
+    public Boolean isFeeDue() {
         return isFeeDue;
     }
 
-    public void setFeeDue(boolean feeDue) {
+    public void setFeeDue(Boolean feeDue) {
         isFeeDue = feeDue;
     }
 
-    public Long getCheckoutTime() {
+    public String getCheckoutTime() {
         return checkoutTime;
     }
 
-    public void setCheckoutTime(Long checkoutTime) {
+    public void setCheckoutTime(String checkoutTime) {
         this.checkoutTime = checkoutTime;
     }
 }
