@@ -33,6 +33,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/numOfDays"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_today"
@@ -56,13 +57,14 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/room"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_home_black_24dp"
-                android:maxLines="1"
                 android:drawablePadding="4dp"
                 android:fontFamily="@font/sniglet"
-                android:inputType="textShortMessage|textCapCharacters" />
+                android:inputType="textShortMessage|textCapCharacters"
+                android:maxLines="1" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -79,6 +81,7 @@
             app:layout_constraintTop_toBottomOf="@id/til_2">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/fee"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_rupee"
@@ -100,6 +103,7 @@
             app:layout_constraintTop_toBottomOf="@id/til_1">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/remarks"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_thumbs_up_down"
@@ -119,6 +123,7 @@
             app:layout_constraintTop_toBottomOf="@id/til_3">
 
             <RadioButton
+                android:id="@+id/due"
                 android:text="Fee due"
                 android:fontFamily="@font/sniglet"
                 android:layout_gravity="center_horizontal"
@@ -126,6 +131,7 @@
                 android:layout_height="wrap_content" />
 
             <RadioButton
+                android:id="@+id/not_due"
                 android:text="No fee due"
                 android:fontFamily="@font/sniglet"
                 android:layout_gravity="center_horizontal"

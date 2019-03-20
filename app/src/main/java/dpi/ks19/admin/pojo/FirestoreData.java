@@ -1,6 +1,6 @@
 package dpi.ks19.admin.pojo;
 
-public class Firestore {
+public class FirestoreData {
     private String feePaid;
     private String id_proof;
     private String remarks;
@@ -11,10 +11,10 @@ public class Firestore {
     private boolean isFeeDue;
     private Long checkoutTime;
 
-    public Firestore() {
+    public FirestoreData() {
     }
 
-    public Firestore(String feePaid, String id_proof, String remarks, Long checkinTime, int numOfDays, String room, boolean isFeeDue, Long checkoutTime) {
+    public FirestoreData(String feePaid, String id_proof, String remarks, Long checkinTime, int numOfDays, String room, boolean isFeeDue, Long checkoutTime) {
         this.feePaid = feePaid;
         this.id_proof = id_proof;
         this.remarks = remarks;

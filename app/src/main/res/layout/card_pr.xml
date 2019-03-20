@@ -33,6 +33,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/fee"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_rupee"
@@ -54,6 +55,7 @@
             app:layout_constraintTop_toBottomOf="@id/til_1">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/id_proof"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_contacts_black"
@@ -75,6 +77,7 @@
             app:layout_constraintTop_toBottomOf="@id/til_2">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/remarks"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_thumbs_up_down"

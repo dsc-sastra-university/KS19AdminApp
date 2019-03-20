@@ -5,21 +5,30 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 import dpi.ks19.admin.app.R;
+import dpi.ks19.admin.pojo.FirestoreData;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.muddzdev.styleabletoast.StyleableToast;
 
@@ -32,6 +41,9 @@ import java.util.Locale;
 
 public class EditActivity extends AppCompatActivity {
     boolean pr = false;
+    String ksid;
+    private FirestoreData firestoreData;
+    ProgressDialog progressDialog;
 
     private void setupUserDetails(@NonNull JSONObject jsonObject) throws JSONException {
         String rawDecrypted = jsonObject.getString("decrypted");
@@ -45,7 +57,8 @@ public class EditActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.email)).setText(separated[1]);
         ((TextView)findViewById(R.id.mobile)).setText(separated[4]);
 
-        ((TextView)findViewById(R.id.ksid)).setText(jsonObject.optString("ksid"));
+        ksid = jsonObject.optString("ksid");
+        ((TextView)findViewById(R.id.ksid)).setText(ksid);
         ((TextView)findViewById(R.id.college)).setText(jsonObject.optString("college"));
     }
 
@@ -68,8 +81,29 @@ public class EditActivity extends AppCompatActivity {
             return;
         }
 
-        // Access a Cloud Firestore instance from your Activity
+        progressDialog = new ProgressDialog(EditActivity.this);
+        progressDialog.setTitle("Fetching data");
+        progressDialog.setMessage("Loading previously entered data from the server");
+        progressDialog.setIndeterminate(true);
+        progressDialog.show();
+
+
+        // Access a Cloud FirestoreData instance from your Activity
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference docRef = db.collection("users").document(ksid);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                firestoreData = documentSnapshot.toObject(FirestoreData.class);
+                progressDialog.dismiss();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                progressDialog.dismiss();
+            }
+        });
+
 
         SharedPreferences preferences = getSharedPreferences("app",MODE_PRIVATE);
         ViewStub stub = findViewById(R.id.layout_stub);
@@ -153,6 +187,31 @@ public class EditActivity extends AppCompatActivity {
         }
 
         findViewById(R.id.button5).setOnClickListener(v -> {
+            if (pr) {
+                firestoreData.setFeePaid(getTextFromTIET(R.id.fee));
+                firestoreData.setId_proof(getTextFromTIET(R.id.id_proof));
+                firestoreData.setRemarks(getTextFromTIET(R.id.remarks));
+
+            } else {
+                try {
+                    if (getTextFromTIET(R.id.numOfDays) != null)
+                        firestoreData.setNumOfDays(Integer.parseInt(getTextFromTIET(R.id.numOfDays)));
+                } catch (NumberFormatException ignore) {
+
+                }
+                firestoreData.setRoom(getTextFromTIET(R.id.room));
+                firestoreData.setFeePaid(getTextFromTIET(R.id.fee));
+                firestoreData.setRemarks(getTextFromTIET(R.id.remarks));
+
+                switch (((RadioGroup)findViewById(R.id.radio_group)).getCheckedRadioButtonId()) {
+                    case R.id.due:
+                        firestoreData.setFeeDue(true);
+                        break;
+                    case R.id.not_due:
+                        firestoreData.setFeeDue(false);
+                        break;
+                }
+            }
             if (Utils.isNotNetworkConnected(EditActivity.this)) {
                 StyleableToast.makeText(EditActivity.this,"No internet",R.style.red_toast).show();
                 return;
@@ -160,5 +219,13 @@ public class EditActivity extends AppCompatActivity {
             StyleableToast.makeText(EditActivity.this,"Saved successfully", Toast.LENGTH_LONG,R.style.success_toast).show();
             EditActivity.this.finish();
         });
+    }
+
+    private String getTextFromTIET (int id) {
+        Editable editable = ((TextInputEditText)findViewById(id)).getText();
+        if (editable != null)
+            return editable.toString();
+        else
+            return null;
     }
 }
