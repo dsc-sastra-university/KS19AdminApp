@@ -230,5 +230,7 @@
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-vision-common:17.0.2@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-tasks:16.0.1@aar" level="project" />
     <orderEntry type="module" module-name="barcode-reader" />
+    <orderEntry type="module" module-name="barcode-reader" />
+    <orderEntry type="module" module-name="barcode-reader" />
   </component>
 </module>

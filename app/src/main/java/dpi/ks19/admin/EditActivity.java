@@ -63,8 +63,9 @@ public class EditActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.email)).setText(separated[1]);
         ((TextView)findViewById(R.id.mobile)).setText(separated[4]);
 
-        ksid = jsonObject.optString("ksid");
-        ((TextView)findViewById(R.id.ksid)).setText(String.format("KSID: %s", ksid));
+        ksid = jsonObject.optString("ksid",null);
+        if (ksid != null)
+            ((TextView)findViewById(R.id.ksid)).setText(String.format("KSID: %s", ksid));
         ((TextView)findViewById(R.id.college)).setText(jsonObject.optString("college"));
     }
 
@@ -167,6 +168,11 @@ public class EditActivity extends AppCompatActivity {
             setupUserDetails(jsonObject);
         } catch (JSONException e) {
             StyleableToast.makeText(EditActivity.this,"Invalid data",R.style.red_toast).show();
+            return;
+        }
+
+        if (ksid == null) {
+            StyleableToast.makeText(EditActivity.this,"User does not have KSID",R.style.red_toast).show();
             return;
         }
 

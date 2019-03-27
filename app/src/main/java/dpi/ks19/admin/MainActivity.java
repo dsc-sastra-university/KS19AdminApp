@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                     params.put("key","AniruthRocksTheWorld1999");
                     params.put("text",rawData);
                     JSONObject json = new JSONObject(params);
-                    JsonObjectRequest jsonRequest = new JsonObjectRequest(Method.POST,"https://protocolfest.co.in/ks/participants/decryptQR.php",json, response -> {
+                    JsonObjectRequest jsonRequest = new JsonObjectRequest(Method.POST,"http://www.kuruksastra.in/participants/decryptQR.php",json, response -> {
                         runOnUiThread(() -> StyleableToast.makeText(MainActivity.this,"Successfully fetched details",R.style.success_toast).show());
                         Log.e("RESPONSE",response.toString());
                         progress_group.setVisibility(View.GONE);
@@ -122,7 +122,8 @@ public class MainActivity extends AppCompatActivity {
                         intent.putExtra("data",response.toString());
                         startActivity(intent);
                     }, error -> { runOnUiThread(() -> StyleableToast.makeText(MainActivity.this,"Uh oh. Invalid barcode",R.style.red_toast).show());
-                        progress_group.setVisibility(View.GONE);});
+                        progress_group.setVisibility(View.GONE);
+                    error.printStackTrace();});
                     jsonRequest.setRetryPolicy(new DefaultRetryPolicy(
                             0,
                             DefaultRetryPolicy.DEFAULT_MAX_RETRIES,

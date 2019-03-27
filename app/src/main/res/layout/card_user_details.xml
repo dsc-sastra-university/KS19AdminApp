@@ -114,7 +114,7 @@
             android:drawableStart="@drawable/ic_info"
             android:drawablePadding="4dp"
             android:fontFamily="@font/sniglet"
-            android:text="KS ID - 12345678"
+            android:text="KS ID - not found"
             app:layout_constraintBottom_toBottomOf="@+id/imageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
